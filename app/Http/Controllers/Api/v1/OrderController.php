@@ -22,28 +22,38 @@ class OrderController extends Controller
         return Order::all();
     }
     public function store(Request $request)
+
+    {
+        $validatedData = $request->validate([
+            'client_id' => 'required|exists:clients,id',
+            'total' => 'required|numeric',
+            'address' => 'required|string|max:255',
+            'products' => 'required|array',
+            'products.*.product_id' => 'required|exists:products,id',
+            'products.*.quantity' => 'required|integer|min:1'
+        ]);
     
-{
-    $requestData = $request->all();
-
-    $order = new Order();
-    $order->user_id = $requestData['user_id'];
-    $order->total = $requestData['total'];
-    $order->product_id=5;
-
-    $order->save();
-
-    $productData = $request->input('products');
-    var_dump($productData);
-    die();
-    foreach ($productData as $item) {
-        $product = Product::find($item['product_id']);
-        if ($product) {
-            $order->products()->attach($product->id, ['quantity' => $item['quantity']]);
+        $order = new Order();
+        $order->client_id = $validatedData['client_id'];
+        $order->total = $validatedData['total'];
+        $order->status = 'pending';
+        $order->address = $validatedData['address'];
+        $order->save();
+    
+        // Asociar productos a la orden
+        $products = $validatedData['products'];
+        foreach ($products as $item) {
+            $product = Product::find($item['product_id']);
+            if ($product) {
+                Log::info('Adjuntando producto a la orden', ['order_id' => $order->id, 'product_id' => $product->id, 'quantity' => $item['quantity']]);
+                $order->products()->attach($item['product_id'], ['quantity' => $item['quantity']]);
+            } else {
+                Log::error('Producto no encontrado', ['product_id' => $item['product_id']]);
+            }
         }
-    }
     
-}
+        return response()->json(['order' => $order], 201);
+    }
 
     
     

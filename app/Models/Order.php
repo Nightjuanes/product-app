@@ -4,18 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
+use App\Models\Cliente;
 use App\Models\Product;
 
 class Order extends Model
 {
     use HasFactory;
-    protected $fillable = ['cliente_id', 'total', 'status', 'adress'];
+    protected $fillable = ['client_id', 'total', 'status', 'address'];
     
 
-    public function user()
+    public function cliente()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Cliente::class);
     }
 
     public function products()

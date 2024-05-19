@@ -10,4 +10,9 @@ class Cliente extends Model
     use HasFactory;
 
     protected $fillable = [ 'name', 'number'];
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
 }
