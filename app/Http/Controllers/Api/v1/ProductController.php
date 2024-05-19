@@ -8,10 +8,10 @@ use App\Models\Product;
 class ProductController extends Controller
 {
     
-    public function index()// get productos
+    public function index()
     {
-        return Product::with('orders')->get();
-
+        $products = Product::all();
+        return response()->json($produc ts);
     }
     public function store(Request $request)
     {
