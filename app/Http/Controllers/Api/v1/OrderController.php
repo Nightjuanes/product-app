@@ -5,12 +5,9 @@ namespace App\Http\Controllers\Api\v1;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
-
-use App\Http\Controllers\Api\v1\ProductController;
-
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
 {
@@ -21,34 +18,37 @@ class OrderController extends Controller
     {
         return Order::all();
     }
-    public function store(Request $request)
     
-{
-    $requestData = $request->all();
-
-    $order = new Order();
-    $order->user_id = $requestData['user_id'];
-    $order->total = $requestData['total'];
-    $order->product_id=5;
-
-    $order->save();
-
-    $productData = $request->input('products');
-    var_dump($productData);
-    die();
-    foreach ($productData as $item) {
-        $product = Product::find($item['product_id']);
-        if ($product) {
-            $order->products()->attach($product->id, ['quantity' => $item['quantity']]);
+    public function store(Request $request)
+    {
+        // Obtener los datos de la solicitud
+        $requestData = $request->all();
+    
+        // Crear una nueva orden
+        $order = new Order();
+        $order->user_id = $requestData['user_id'];
+        $order->total = $requestData['total'];
+        $order->status = 'pending';
+        $order->address = $requestData['address'];
+    
+        $order->save();
+    
+        // Asociar productos a la orden en la tabla 'order_products'
+        foreach ($requestData['products'] as $productData) {
+            $product = Product::find($productData['product_id']);
+            if ($product) {
+                // Asociar el producto con la cantidad a la orden
+                $order->products()->attach($product->id, ['quantity' => $productData['quantity']]);
+            } else {
+                // Manejar el caso en que el producto no se encuentra
+                return response()->json(['error' => 'Producto no encontrado'], 404);
+            }
         }
+    
+        // Retornar la respuesta con la orden creada
+        return response()->json(['order' => $order], 201);
     }
     
-}
-
-    
-    
-
-     
     public function show(Request $request)
     {
         $id = $request->id;
