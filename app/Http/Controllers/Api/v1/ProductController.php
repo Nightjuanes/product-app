@@ -11,7 +11,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
-        return response()->json($produc ts);
+        return response()->json($products);
     }
     public function store(Request $request)
     {
