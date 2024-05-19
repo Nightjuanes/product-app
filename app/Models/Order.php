@@ -10,7 +10,7 @@ use App\Models\Product;
 class Order extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id', 'total'];
+    protected $fillable = ['cliente_id', 'total', 'status', 'direccion',];
 
     public function user()
     {
