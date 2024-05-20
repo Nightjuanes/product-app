@@ -23,6 +23,8 @@ Route :: prefix('v1')->group(function() {
     Route :: get('/order', [OrderController::class, 'show']);
     Route :: patch('/order/{id}', [OrderController::class, 'update']);
     Route :: delete('/order/{id}', [OrderController::class, 'destroy']);
+    Route :: put('/order/{id}', [OrderController::class, 'updateStatus']);
+
 
     Route :: get('  ', [ClientController::class, 'index']);
     Route :: post('/client', [ClientController::class, 'store']);

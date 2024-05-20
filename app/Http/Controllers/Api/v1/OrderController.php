@@ -48,7 +48,7 @@ class OrderController extends Controller
         // Retornar la respuesta con la orden creada
         return response()->json(['order' => $order], 201);
     }
-    
+
     public function show(Request $request)
     {
         $id = $request->id;
@@ -62,20 +62,27 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Order $order)
+    public function update()
     {
-        $order->fill($request->all());
-        $order->save();
-        return $request->all();
-
-        $product_id = $request->input('product_id');
     
-        $order->products()->attach($product_id, ['quantity' => $request->input('quantity')]);
-        return $order;
     }
 
     public function destroy(Order $order)
     {
         //
+    }
+    public function updateStatus($id)
+    {
+        $order = Order::find($id);
+
+        if (!$order) {
+            return response()->json(['message' => 'Order not found'], 404);
+        }
+
+        // Actualizar el estado de la orden (cambiar 'status' según tus necesidades)
+        $order->status = 'approved'; // Por ejemplo, cambiando el estado a 'approved'
+        $order->save();
+
+        return response()->json(['message' => 'Order status updated successfully']);
     }
 }
