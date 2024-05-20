@@ -19,7 +19,7 @@ Route :: prefix('v1')->group(function() {
     Route :: delete('{id}', [ProductController::class, 'destroy']);
 
     Route :: get('/order/all', [OrderController::class, 'index']);
-    Route :: post('/order', [OrderController::class, 'store']);
+    Route :: post('/order/enviar', [OrderController::class, 'store']);
     Route :: get('/order', [OrderController::class, 'show']);
     Route :: patch('/order/{id}', [OrderController::class, 'update']);
     Route :: delete('/order/{id}', [OrderController::class, 'destroy']);
