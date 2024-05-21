@@ -24,7 +24,8 @@ Route :: prefix('v1')->group(function() {
     Route :: patch('/order/{id}', [OrderController::class, 'update']);
     Route :: delete('/order/{id}', [OrderController::class, 'destroy']);
     Route :: put('/order/{id}', [OrderController::class, 'updateStatus']);
-
+    Route :: get('order/aprobados', [OrderController::class, 'aproved']);
+    Route :: get('order/pendientes', [OrderController::class, 'pending']);
 
     Route :: get('  ', [ClientController::class, 'index']);
     Route :: post('/client', [ClientController::class, 'store']);

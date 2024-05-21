@@ -26,8 +26,11 @@ class OrderController extends Controller
     
         // Crear una nueva orden
         $order = new Order();
-        $order->user_id = $requestData['user_id'];
+
         $order->total = $requestData['total'];
+        $order->nombre = $requestData['nombre'];
+        $order->cedula = $requestData['cedula'];
+        $order->telefono = $requestData['telefono'];
         $order->status = 'pending';
         $order->address = $requestData['address'];
     
@@ -85,4 +88,14 @@ class OrderController extends Controller
 
         return response()->json(['message' => 'Order status updated successfully']);
     }
+    public function aproved(){
+        $orders = Order::where('status', 'approved')->get();
+        return response()->json($orders);
+    }
+
+    public function pending(){
+        $orders = Order::where('status', 'pending')->get();
+        return response()->json($orders);
+    }
+
 }

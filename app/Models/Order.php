@@ -10,12 +10,8 @@ use App\Models\Product;
 class Order extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id', 'total','status','address'];
+    protected $fillable = ['nombre','cedula','telefono' ,'total','status','address'];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 
     public function products()
     {
