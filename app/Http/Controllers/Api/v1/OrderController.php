@@ -102,12 +102,11 @@ class OrderController extends Controller
     $request->validate([
         'cedula' => 'required|string',
     ]);
-
     // Obtener las órdenes por cédula
     $orders = Order::where('cedula', $request->cedula)->get();
 
     // Retornar las órdenes en formato JSON
-    return response()->json(['orders' => $orders], 200);
+    return response()->json($orders, 200);
     }
 
 
