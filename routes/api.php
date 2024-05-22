@@ -12,12 +12,13 @@ use Illuminate\Support\Facades\Route;
 
 
 Route :: prefix('v1')->group(function() { 
+    //Rutas de productos PUBLICAS
     Route :: get('/product/all', [ProductController::class, 'index']);
     Route :: post('/product', [ProductController::class, 'store']);
     Route :: get('/product', [ProductController::class, 'show']);
     Route :: patch('/product/{id}', [ProductController::class, 'update']);
     Route :: delete('{id}', [ProductController::class, 'destroy']);
-
+    //Rutas de ordenes PRIVADAS
     Route :: get('/order/all', [OrderController::class, 'index']);
     Route :: post('/order/enviar', [OrderController::class, 'store']);
     Route :: get('/order', [OrderController::class, 'show']);
@@ -27,7 +28,8 @@ Route :: prefix('v1')->group(function() {
     Route :: get('order/aprobados', [OrderController::class, 'aproved']);
     Route :: get('order/pendientes', [OrderController::class, 'pending']);
     Route :: post('order/cedula', [OrderController::class, 'porcedula']);
-
+    //Rutas de clientes 
+    
     Route :: get('  ', [ClientController::class, 'index']);
     Route :: post('/client', [ClientController::class, 'store']);
     Route :: get('/client', [ClientController::class, 'show']);
