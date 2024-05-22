@@ -97,5 +97,18 @@ class OrderController extends Controller
         $orders = Order::where('status', 'pending')->get();
         return response()->json($orders);
     }
+    public function porcedula(  Request $request ){
+       // Validar la solicitud y asegurarse de que se proporcione la cédula
+    $request->validate([
+        'cedula' => 'required|string',
+    ]);
+
+    // Obtener las órdenes por cédula
+    $orders = Order::where('cedula', $request->cedula)->get();
+
+    // Retornar las órdenes en formato JSON
+    return response()->json(['orders' => $orders], 200);
+    }
+
 
 }

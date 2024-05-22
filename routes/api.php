@@ -26,6 +26,7 @@ Route :: prefix('v1')->group(function() {
     Route :: put('/order/{id}', [OrderController::class, 'updateStatus']);
     Route :: get('order/aprobados', [OrderController::class, 'aproved']);
     Route :: get('order/pendientes', [OrderController::class, 'pending']);
+    Route :: post('order/cedula', [OrderController::class, 'porcedula']);
 
     Route :: get('  ', [ClientController::class, 'index']);
     Route :: post('/client', [ClientController::class, 'store']);
