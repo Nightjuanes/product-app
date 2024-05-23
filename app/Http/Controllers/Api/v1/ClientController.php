@@ -13,7 +13,7 @@ class ClientController extends Controller
         $users = User::all();
         return response()->json($users);
 
-        return User::with(['orders', 'order_product'])->get();
+        //return User::with(['orders', 'order_product'])->get();
     }
 
     public function store(Request $request)

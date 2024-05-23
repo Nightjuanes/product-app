@@ -5,8 +5,13 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Order;
+use Laravel\Sanctum\HasApiTokens;
+use Laravel\Sanctum\PersonalAccessToken;
+
 
 class User extends Authenticatable
 {
@@ -46,6 +51,26 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function createToken($name = null, $token = null)
+{
+    $token = $token ?: Str::random(60);
+
+    $plainTextToken = $token;
+
+    $hashedToken = Hash::make($token);
+
+    $this->tokens()->create([
+        'name' => $name,
+        'token' => $hashedToken,
+        'plain_text_token' => $plainTextToken,
+    ]);
+
+    return $plainTextToken;
+}
+public function tokens()
+{
+    return $this->hasMany(PersonalAccessToken::class);
+}
 
 
 }
